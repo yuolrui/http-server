@@ -7,6 +7,7 @@
 - **路由激活控制**：通过 `active` 字段启用/禁用路由，无需重启服务
 - **热重载**：routes.json 变更 1 秒内生效，数据文件变更 500ms 内生效
 - **路径参数**：支持 `:id` 风格的路径参数及模板替换
+- **响应延迟**：支持配置延迟时间模拟慢接口
 - **内存高效**：仅加载激活的路由文件到内存
 - **并发安全**：使用 RWMutex 保护并发访问
 - **优雅关闭**：支持 5 秒超时的优雅关闭
@@ -15,16 +16,48 @@
 
 ```bash
 # 使用默认 routes.json 运行
-go run main.go
+go run ./cmd/http-server
 
 # 使用自定义路由配置运行
-go run main.go path/to/routes.json
+go run ./cmd/http-server path/to/routes.json
 
 # 编译
-go build -o http-server.exe
+go build -o http-server.exe ./cmd/http-server
 ```
 
+> **注意**：项目采用标准 Go 项目结构，入口在 `cmd/http-server/`，必须指定路径运行。
+
 服务器默认监听 `:8080` 端口。
+
+## 项目结构
+
+```
+http-server/
+├── cmd/
+│   └── http-server/
+│       └── main.go           # 主入口
+├── internal/
+│   ├── config/
+│   │   └── config.go         # 配置结构体和解析
+│   ├── server/
+│   │   └── server.go         # HTTPServer核心、路由加载、请求处理、监听
+│   └ template/
+│       └ template.go         # JSON模板渲染
+├── data/                     # JSON响应数据
+│   ├── common/
+│   └── dify/
+├── routes.json               # 路由配置
+├── README.md
+└── CLAUDE.md
+```
+
+| 目录/文件 | 职责 |
+|----------|------|
+| `cmd/http-server/` | 主入口、服务器启动、优雅关闭 |
+| `internal/config/` | 配置结构体、延迟解析 |
+| `internal/server/` | HTTPServer结构体、路由加载、缓存管理、请求处理、监听 |
+| `internal/template/` | JSON模板渲染 |
+| `data/` | JSON响应数据文件 |
 
 ## 路由配置
 
@@ -50,6 +83,13 @@ go build -o http-server.exe
       "method": "GET",
       "path": "/users/:id",
       "file": "data/common/user.json"
+    },
+    {
+      "active": true,
+      "method": "POST",
+      "path": "/v1/chat-messages",
+      "file": "data/dify/chat-messages.json",
+      "delay": "2s"
     }
   ]
 }
@@ -63,6 +103,7 @@ go build -o http-server.exe
 | `method` | string | HTTP 方法（GET、POST、PUT、DELETE 等） |
 | `path` | string | URL 路径，支持 `:id` 参数语法 |
 | `file` | string | JSON 数据文件路径（相对于工作目录） |
+| `delay` | string | 可选，响应延迟时间（如 `"500ms"`、`"2s"`） |
 
 ## 数据文件
 
@@ -132,7 +173,7 @@ curl http://localhost:8080/users
 # GET 指定用户（路径参数）
 curl http://localhost:8080/users/123
 
-# POST 聊天消息
+# POST 聊天消息（配置了2秒延迟）
 curl -X POST http://localhost:8080/v1/chat-messages \
   -H "Content-Type: application/json" \
   -d '{"message": "hello"}'
@@ -140,24 +181,6 @@ curl -X POST http://localhost:8080/v1/chat-messages \
 # 未激活的路由返回 404
 curl http://localhost:8080/products
 # {"error": "route not found or inactive", "method": "GET", "path": "/products"}
-```
-
-## 架构
-
-```
-┌─────────────────────────────────────────────┐
-│                  main.go                     │
-├─────────────────────────────────────────────┤
-│  HTTPServer                                  │
-│  ├── routes (RoutesConfig)                   │
-│  │   └── routes.json (热重载 1s)            │
-│  ├── cache (map[string]*FileCache)          │
-│  │   └── *.json 文件 (热重载 500ms)         │
-│  └── Watch() - 后台文件监听器               │
-├─────────────────────────────────────────────┤
-│  Gin Engine                                  │
-│  └── NoRoute handler → 匹配激活的路由       │
-└─────────────────────────────────────────────┘
 ```
 
 ## 环境要求

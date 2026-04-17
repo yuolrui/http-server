@@ -6,18 +6,37 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Run the server (listens on :8080)
-go run main.go
+go run ./cmd/http-server
 
 # Run with custom routes config
-go run main.go path/to/routes.json
+go run ./cmd/http-server path/to/routes.json
 
 # Build binary
-go build -o http-server.exe
+go build -o http-server.exe ./cmd/http-server
 ```
 
 ## Architecture
 
 High-performance HTTP mock server with route activation control.
+
+### Project Structure
+
+```
+http-server/
+├── cmd/
+│   └── http-server/
+│       └── main.go           # 主入口
+├── internal/
+│   ├── config/
+│   │   └── config.go         # 配置结构体和解析
+│   ├── server/
+│   │   └── server.go         # HTTPServer核心、路由加载、请求处理、监听
+│   └── template/
+│       └── template.go       # JSON模板渲染
+├── data/                     # JSON响应数据
+├── routes.json               # 路由配置
+└── CLAUDE.md
+```
 
 ### Route Configuration (routes.json)
 
@@ -28,7 +47,8 @@ High-performance HTTP mock server with route activation control.
       "active": true,
       "method": "POST",
       "path": "/v1/chat-messages",
-      "file": "data/dify/chat-messages.json"
+      "file": "data/dify/chat-messages.json",
+      "delay": "2s"
     },
     {
       "active": false,
@@ -45,6 +65,7 @@ High-performance HTTP mock server with route activation control.
 - `method`: HTTP method (GET, POST, PUT, DELETE, etc.)
 - `path`: URL path, supports `:id` parameter syntax
 - `file`: JSON data file path
+- `delay`: Optional delay duration (e.g., `"500ms"`, `"2s"`, `"1.5s"`) to simulate slow API responses
 
 ### Activation Control
 
@@ -80,6 +101,14 @@ Template syntax: `{{.PathParams.id}}` for path parameters.
    ```
 
 3. Server auto-loads within 1 second
+
+### Adding New Feature
+
+1. **配置相关** - 修改 `internal/config/config.go`
+2. **服务器核心** - 修改 `internal/server/server.go`
+3. **模板渲染** - 修改 `internal/template/template.go`
+4. **更新文档** - 更新 CLAUDE.md 和 README.md
+5. **测试验证** - `go build -o http-server.exe ./cmd/http-server`
 
 ## Dependencies
 

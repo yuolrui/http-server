@@ -34,7 +34,8 @@
       "active": true,
       "method": "POST",
       "path": "/v1/chat-messages",
-      "file": "data/dify/chat-messages.json"
+      "file": "data/dify/chat-messages.json",
+      "delay": "2s"
     }
   ]
 }

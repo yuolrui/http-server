@@ -6,7 +6,7 @@
 set -e
 
 VERSION=${VERSION:-"1.0.0"}
-OUTPUT_DIR="build"
+OUTPUT_DIR="release"
 MAIN_PATH="./cmd/http-server"
 
 # 清理构建目录

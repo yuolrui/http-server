@@ -24,6 +24,8 @@ build.bat                   # Windows CMD
 
 ## Cross-Compilation Output
 
+编译产物输出到 `release/` 目录：
+
 | Platform | Architecture | Output |
 |----------|-------------|--------|
 | Windows | amd64 | `http-server-1.0.0-windows-amd64.exe` |

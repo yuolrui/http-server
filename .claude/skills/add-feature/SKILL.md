@@ -90,6 +90,9 @@ if route.NewConfigField != "" {
 # 构建验证
 go build -o http-server.exe ./cmd/http-server
 
+# 交叉编译所有平台（输出到 release/ 目录）
+make build-all
+
 # 运行服务器
 go run ./cmd/http-server
 

@@ -1,7 +1,7 @@
 # HTTP Mock Server Makefile
 
 VERSION ?= 1.0.0
-OUTPUT_DIR = build
+OUTPUT_DIR = release
 MAIN_PATH = ./cmd/http-server
 
 # 默认目标：编译当前平台
@@ -15,14 +15,11 @@ clean:
 	rm -rf $(OUTPUT_DIR)
 	rm -f http-server.exe
 
-# 创建构建目录
-$(OUTPUT_DIR):
-	mkdir -p $(OUTPUT_DIR)
-
 # 交叉编译所有平台
 .PHONY: build-all
-build-all: clean $(OUTPUT_DIR)
+build-all: clean
 	@echo "开始交叉编译..."
+	mkdir -p $(OUTPUT_DIR)
 	GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -o $(OUTPUT_DIR)/http-server-$(VERSION)-windows-amd64.exe $(MAIN_PATH)
 	GOOS=windows GOARCH=arm64 go build -ldflags "-s -w" -o $(OUTPUT_DIR)/http-server-$(VERSION)-windows-arm64.exe $(MAIN_PATH)
 	GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o $(OUTPUT_DIR)/http-server-$(VERSION)-linux-amd64 $(MAIN_PATH)

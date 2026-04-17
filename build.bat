@@ -1,7 +1,7 @@
 @echo off
 REM HTTP Mock Server 交叉编译脚本 (Windows)
 
-set OUTPUT_DIR=build
+set OUTPUT_DIR=release
 set VERSION=1.0.0
 
 echo 清理构建目录...

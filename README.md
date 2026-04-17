@@ -47,7 +47,7 @@ build.bat                   # Windows CMD
 | macOS | amd64 | `http-server-1.0.0-darwin-amd64` |
 | macOS | arm64 | `http-server-1.0.0-darwin-arm64` |
 
-编译产物输出到 `build/` 目录。
+编译产物输出到 `release/` 目录。
 
 ## 项目结构
 

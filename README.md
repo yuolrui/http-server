@@ -21,13 +21,33 @@ go run ./cmd/http-server
 # 使用自定义路由配置运行
 go run ./cmd/http-server path/to/routes.json
 
-# 编译
+# 编译当前平台
 go build -o http-server.exe ./cmd/http-server
+
+# 交叉编译所有平台
+make build-all              # 使用 Makefile
+./build.sh                  # Linux/macOS/Git Bash
+build.bat                   # Windows CMD
 ```
 
 > **注意**：项目采用标准 Go 项目结构，入口在 `cmd/http-server/`，必须指定路径运行。
 
 服务器默认监听 `:8080` 端口。
+
+## 交叉编译
+
+支持多平台多架构编译：
+
+| 平台 | 架构 | 输出文件 |
+|------|------|---------|
+| Windows | amd64 | `http-server-1.0.0-windows-amd64.exe` |
+| Windows | arm64 | `http-server-1.0.0-windows-arm64.exe` |
+| Linux | amd64 | `http-server-1.0.0-linux-amd64` |
+| Linux | arm64 | `http-server-1.0.0-linux-arm64` |
+| macOS | amd64 | `http-server-1.0.0-darwin-amd64` |
+| macOS | arm64 | `http-server-1.0.0-darwin-arm64` |
+
+编译产物输出到 `build/` 目录。
 
 ## 项目结构
 
@@ -58,6 +78,21 @@ http-server/
 | `internal/server/` | HTTPServer结构体、路由加载、缓存管理、请求处理、监听 |
 | `internal/template/` | JSON模板渲染 |
 | `data/` | JSON响应数据文件 |
+| `build.sh` | Linux/macOS/Git Bash 交叉编译脚本 |
+| `build.bat` | Windows CMD 交叉编译脚本 |
+| `Makefile` | Make 构建脚本 |
+
+## Make 常用命令
+
+```bash
+make build          # 编译当前平台
+make build-all      # 交叉编译所有平台
+make run            # 运行服务器
+make clean          # 清理构建产物
+make fmt            # 格式化代码
+make vet            # 静态检查
+make help           # 显示所有可用命令
+```
 
 ## 路由配置
 

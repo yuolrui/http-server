@@ -11,9 +11,27 @@ go run ./cmd/http-server
 # Run with custom routes config
 go run ./cmd/http-server path/to/routes.json
 
-# Build binary
+# Build binary (current platform)
 go build -o http-server.exe ./cmd/http-server
+
+# Cross-compile all platforms
+make build-all              # 使用 Makefile
+
+# Or use scripts:
+./build.sh                  # Linux/macOS/Git Bash
+build.bat                   # Windows CMD
 ```
+
+## Cross-Compilation Output
+
+| Platform | Architecture | Output |
+|----------|-------------|--------|
+| Windows | amd64 | `http-server-1.0.0-windows-amd64.exe` |
+| Windows | arm64 | `http-server-1.0.0-windows-arm64.exe` |
+| Linux | amd64 | `http-server-1.0.0-linux-amd64` |
+| Linux | arm64 | `http-server-1.0.0-linux-arm64` |
+| macOS | amd64 | `http-server-1.0.0-darwin-amd64` |
+| macOS | arm64 | `http-server-1.0.0-darwin-arm64` |
 
 ## Architecture
 

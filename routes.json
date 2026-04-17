@@ -1,0 +1,40 @@
+{
+  "routes": [
+    {
+      "active": true,
+      "method": "GET",
+      "path": "/",
+      "file": "data/common/hello.json"
+    },
+    {
+      "active": true,
+      "method": "GET",
+      "path": "/users",
+      "file": "data/common/users.json"
+    },
+    {
+      "active": true,
+      "method": "GET",
+      "path": "/users/:id",
+      "file": "data/common/user.json"
+    },
+    {
+      "active": false,
+      "method": "GET",
+      "path": "/products",
+      "file": "data/common/products.json"
+    },
+    {
+      "active": false,
+      "method": "GET",
+      "path": "/orders",
+      "file": "data/common/orders.json"
+    },
+    {
+      "active": true,
+      "method": "POST",
+      "path": "/v1/chat-messages",
+      "file": "data/dify/chat-messages.json"
+    }
+  ]
+}

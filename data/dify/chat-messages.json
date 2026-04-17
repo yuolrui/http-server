@@ -1,0 +1,30 @@
+{
+  "event": "message",
+  "task_id": "f7125c43-9d7d-4509-9290-312f54497c4b",
+  "id": "f0a25828-530b-4c2f-918e-495282c75ce4",
+  "message_id": "f0a25828-530b-4c2f-918e-495282c75ce4",
+  "conversation_id": "fd59a1b2-df1e-4d35-a53f-904369390039",
+  "mode": "advanced-chat",
+  "answer": "{{\n  \"need_query\": true,\n  \"query_list\": [\n    {\n      \"capability_id\": \"system_cpu_usage\",\n      \"display\": [\n        \"date\",\n        \"usage\"\n      ],\n      \"limit\": 2000,\n      \"interval\": \"last_1h\",\n      \"chart\": \"timeline\",\n      \"filter\": [],\n      \"sort\": []\n    },\n    {\n      \"capability_id\": \"busyness_cpu_usage\",\n      \"display\": [\n        \"date\",\n        \"usage\"\n      ],\n      \"limit\": 2000,\n      \"interval\": \"last_1h\",\n      \"chart\": \"timeline\",\n      \"filter\": [],\n      \"sort\": []\n    }\n  ]\n}}",
+  "metadata": {
+    "annotation_reply": null,
+    "retriever_resources": [],
+    "usage": {
+      "prompt_tokens": 8535,
+      "prompt_unit_price": "0.0008",
+      "prompt_price_unit": "0.001",
+      "prompt_price": "0.0068280",
+      "completion_tokens": 175,
+      "completion_unit_price": "0.0048",
+      "completion_price_unit": "0.001",
+      "completion_price": "0.0008400",
+      "total_tokens": 8710,
+      "total_price": "0.0076680",
+      "currency": "RMB",
+      "latency": 86.423,
+      "time_to_first_token": 20.45,
+      "time_to_generate": 70.229
+    }
+  },
+  "created_at": 1775715908
+}

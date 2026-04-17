@@ -1,0 +1,6 @@
+{
+  "id": "{{.PathParams.id}}",
+  "name": "用户{{.PathParams.id}}",
+  "email": "user{{.PathParams.id}}@example.com",
+  "created_at": "2024-01-01T00:00:00Z"
+}

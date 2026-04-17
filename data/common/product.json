@@ -1,0 +1,6 @@
+{
+  "id": "{{.PathParams.id}}",
+  "name": "产品{{.PathParams.id}}",
+  "price": 999.00,
+  "stock": 100
+}

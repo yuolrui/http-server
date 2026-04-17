@@ -1,0 +1,5 @@
+[
+  {"id": "ORD001", "user_id": 1, "total": 6999.00, "status": "completed"},
+  {"id": "ORD002", "user_id": 2, "total": 14999.00, "status": "pending"},
+  {"id": "ORD003", "user_id": 3, "total": 4799.00, "status": "shipped"}
+]
